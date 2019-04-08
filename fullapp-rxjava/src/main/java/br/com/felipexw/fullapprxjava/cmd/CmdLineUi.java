@@ -5,15 +5,10 @@ import akka.actor.ActorSystem;
 import br.com.felipexw.fullapprxjava.actors.Poller;
 import br.com.felipexw.fullapprxjava.actors.PriceRequestor;
 import br.com.felipexw.fullapprxjava.actors.Printer;
-import br.com.felipexw.fullapprxjava.observer.ConsolePrintObserver;
 import br.com.felipexw.fullapprxjava.service.CoinbaseService;
-import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class CmdLineUi implements CommandLineRunner {
@@ -40,5 +35,7 @@ public class CmdLineUi implements CommandLineRunner {
         final ActorRef printer = system.actorOf(Printer.props(), "printerActor");
         final ActorRef priceRequestor = system.actorOf(PriceRequestor.props(printer, coinbaseService), "requestor");
         final ActorRef poller = system.actorOf(Poller.props("BTC-USD", priceRequestor), "poller");
+
+        final ActorRef ehtPoller = system.actorOf(Poller.props("ETH-UDS", priceRequestor), "ehtPoller");
     }
 }

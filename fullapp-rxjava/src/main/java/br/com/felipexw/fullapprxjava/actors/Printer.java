@@ -28,9 +28,9 @@ public class Printer extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder().match(CryptoPrice.class, msg ->
                 msg.message.subscribe(coinbaseResponse -> {
-                    final String line = "[" + LocalDateTime.now() + "]"
+                    final String line = "[" + LocalDateTime.now() + "] "
                             + coinbaseResponse.getData().getBase() +
-                            "Buy price: $" +
+                            " Buy price: $" +
                             coinbaseResponse.getData().getAmount() + " "
                              + coinbaseResponse.getData().getCurrency();
                     System.out.println(line);
